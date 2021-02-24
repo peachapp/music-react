@@ -1,5 +1,5 @@
 const Login = () => {
-  return <div>login</div>
+  return <div className="container login-container">login</div>
 };
 
 export default Login;
