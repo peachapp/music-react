@@ -4,7 +4,6 @@ import fastclick from 'fastclick';
 import App from 'App';
 import reportWebVitals from 'reportWebVitals';
 import 'antd-mobile/dist/antd-mobile.less'; // 引入官方提供的 less 样式入口文件
-import "common/theme.less";   // 用于覆盖上面定义的变量
 import "common/reset.less";   // 清除浏览器默认样式
 
 fastclick.attach(document.body);

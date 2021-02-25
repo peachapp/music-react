@@ -485,7 +485,7 @@ module.exports = function (webpackEnv) {
                 sourceMap: isEnvProduction
                   ? shouldUseSourceMap
                   : isEnvDevelopment,
-              }, "less-loader", {javascriptEnabled: true}), //增加loader
+              }, "less-loader", {javascriptEnabled: true, modifyVars: theme}), //增加loader
               // Don't consider CSS imports dead code even if the
               // containing package claims to have no side effects.
               // Remove this when webpack adds a warning or an error for this.
