@@ -1,4 +1,4 @@
-import service from 'axios/index';
+import service from '../index';
 
 // 手机登录
 export const loginInPhone = data => {

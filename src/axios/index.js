@@ -9,9 +9,6 @@ const service = axios.create({
 
 /****** request拦截器==>对请求参数做处理 ******/
 service.interceptors.request.use(response => {
-  // app.$vux.loading.show({
-  //     text: '数据加载中……'
-  // });
   // response.headers['Content-Type'] = 'application/json';
   // token 测试
   if (response.headers.authorization) {
@@ -41,8 +38,8 @@ service.interceptors.request.use(response => {
 service.interceptors.response.use(
   response => { //成功请求到数据
     //这里根据后端提供的数据进行对应的处理
-    console.log('response', response);
-    if (response.data.code === 0) {
+    if (response.data.code === 200) {
+      // 请求成功将response.data返回
       return response.data;
     } else if (response.data.code === 401) {
       // store.dispatch('Login')
