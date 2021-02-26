@@ -16,6 +16,7 @@ const Routers = () => {
     <Suspense fallback={<Loading />}>
       <Switch>
         <Route path='/' exact component={Home}></Route>
+        <Route path='/home' component={Home}></Route>
         <Route path='/login' component={Login}></Route>
         <Route path='/test' component={Test}></Route>
         <Route path='/notFound' component={NotFound}></Route>
