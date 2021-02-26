@@ -69,5 +69,23 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
 
-
 ### jsconfig.json 配置绝对路径
+
+### 常用尺寸单位
+
+- 120px
+- 64px
+- 48px
+- 36px
+- 32px
+- 28px
+- 24px
+- 12px
+- 6px
+
+## 常用颜色
+
+- brand-primary: "#e20000"
+- color-text-base: "#333"
+- #666
+- #eee

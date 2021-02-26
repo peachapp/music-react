@@ -9,9 +9,10 @@ import "common/reset.less";   // 清除浏览器默认样式
 fastclick.attach(document.body);
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  // <React.StrictMode>
+  //   <App />
+  // </React.StrictMode>,
+  <App />,
   document.getElementById('root')
 );
 
