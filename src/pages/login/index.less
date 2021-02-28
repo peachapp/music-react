@@ -1,3 +1,87 @@
 .login-container {
   height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  .login-logo {
+    color: @brand-primary;
+  }
+
+  .login-content {
+    width: 100%;
+    margin: 32px 0;
+  }
+
+  .login-box {
+    position: relative;
+  }
+
+  .login-box {
+    margin-bottom: 32px;
+  }
+
+  .login-input .am-list-line {
+    position: relative;
+  }
+
+  .login-input .am-list-line::after {
+    content: '';
+    position: absolute;
+    background-color: #ddd;
+    display: block;
+    z-index: 1;
+    top: auto;
+    right: auto;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 1PX;
+    transform-origin: 50% 100%;
+    transform: scaleY(0.5);
+  }
+
+  .login-switch {
+    text-align: right;
+    font-size: 12px;
+    color: @brand-primary;
+  }
+
+  .login-btn {
+    width: 100%;
+    border-radius: 22px;
+  }
+
+  .agree-item {
+    margin-left: 0;
+    opacity: 0.6;
+  }
+
+  .agree-item span {
+    font-size: 10px;
+    color: @brand-primary;
+  }
+
+  .agree-item .am-checkbox-wrapper {
+    margin-left: 16px;
+  }
+
+  .agree-item .am-checkbox {
+    width: 16px;
+  }
+
+  .agree-item .am-checkbox-inner {
+    top: 14px;
+    width: 14px;
+    height: 14px;
+    border-color: @brand-primary;
+  }
+
+  .agree-item .am-checkbox-inner:after {
+    top: -0.5px;
+    right: 3px;
+    width: 5px;
+    height: 8px;
+  }
 }

@@ -29,7 +29,7 @@ const Login = () => {
 
   const LoginBox = () => {
     if (loginType === "0") {
-      return <div className="login-content login-content-code">
+      return <div className="login-content login-content-code" key="login-content-code">
         <div className="login-box login-box-code">
           <InputItem
             className="login-input"
@@ -47,11 +47,11 @@ const Login = () => {
             extra={<div>获取验证码</div>}
           />
         </div>
-        <div className="login-switch"><span onClick={() => { setLoginType('0'); }}>密码登录</span></div>
+        <div className="login-switch"><span onClick={() => { setLoginType('1'); }}>密码登录</span></div>
       </div>
     };
 
-    return <div className="login-content login-content-pass">
+    return <div className="login-content login-content-pass" key="login-content-pass">
       <div className="login-box login-box-pass">
         <InputItem
           className="login-input"
@@ -68,16 +68,19 @@ const Login = () => {
           onChange={setPassword}
         />
       </div>
-      <div className="login-switch"><span onClick={() => { setLoginType('1'); }}>密码登录</span></div>
+      <div className="login-switch"><span onClick={() => { setLoginType('0'); }}>验证码登录</span></div>
     </div>
   };
 
   return <div className="container login-container">
     <div className="login-logo">真音悦</div>
     <LoginBox />
-    <Button className="login-btn">登录</Button>
-    <AgreeItem data-seed="logId" onChange={e => console.log('checkbox', e)}>
-      Agree <a onClick={(e) => { e.preventDefault(); alert('agree it'); }}>agreement</a>
+    <Button className="login-btn" type="primary">登录</Button>
+    <AgreeItem className="agree-item" data-seed="logId" onChange={e => console.log('checkbox', e)}>
+      <span>同意</span>
+      <span onClick={(e) => { e.preventDefault(); alert('agree it'); }}>《用户协议》</span>
+      <span onClick={(e) => { e.preventDefault(); alert('agree it'); }}>《隐私政策》</span>
+      <span onClick={(e) => { e.preventDefault(); alert('agree it'); }}>《儿童隐私政策》</span>
     </AgreeItem>
   </div>
 };
