@@ -148,7 +148,11 @@ const Login = () => {
   };
 
   return <div className="container login-container">
-    <div className="login-logo">真音悦</div>
+    <div className="login-logo">
+      <svg aria-hidden="true" className="login-logo-icon">
+        <use xlinkHref="#iconmusic" />
+      </svg>
+    </div>
     {renderLoginBox()}
     <Button className="login-btn" type="primary" onClick={onSubmit}>登录</Button>
     <AgreeItem className="agree-item" checked={agreeChecked} onChange={e => { setAgreeChecked(e.target.checked) }}>
