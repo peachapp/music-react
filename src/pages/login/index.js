@@ -21,6 +21,8 @@ const Login = () => {
 
   const [agreeChecked, setAgreeChecked] = useState(false);
 
+  const [agreeItemClass, setAgreeItemClass] = useState("");
+
   // methods
   // 发送验证码
   const onGetCaptcha = async () => {
@@ -45,7 +47,13 @@ const Login = () => {
   const onSubmit = async () => {
     try {
       if (!agreeChecked) {
+        setAgreeItemClass("rubberBand");
         Toast.info(`请同意用户协议！`);
+        let timer = setTimeout(function () {
+          setAgreeItemClass("");
+          clearTimeout(timer);
+          timer = null;
+        }, 500);
         return false;
       };
 
@@ -155,7 +163,7 @@ const Login = () => {
     </div>
     {renderLoginBox()}
     <Button className="login-btn" type="primary" onClick={onSubmit}>登录</Button>
-    <AgreeItem className="agree-item" checked={agreeChecked} onChange={e => { setAgreeChecked(e.target.checked) }}>
+    <AgreeItem className={["agree-item", "animated", agreeItemClass]} checked={agreeChecked} onChange={e => { setAgreeChecked(e.target.checked) }}>
       <span>同意</span>
       <span onClick={(e) => { e.preventDefault(); alert('agree it'); }}>《用户协议》</span>
       <span onClick={(e) => { e.preventDefault(); alert('agree it'); }}>《隐私政策》</span>
