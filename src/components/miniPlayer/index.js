@@ -20,4 +20,4 @@ const MiniPlayer = (props) => {
   </div>
 };
 
-export default MiniPlayer;
+export default React.memo(MiniPlayer);

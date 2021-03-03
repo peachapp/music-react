@@ -1,3 +1,4 @@
+import React from 'react';
 import Player from 'components/player/index';
 import "./index.less";
 
@@ -13,4 +14,4 @@ const Test = () => {
   </div>
 };
 
-export default Test;
+export default React.memo(Test);

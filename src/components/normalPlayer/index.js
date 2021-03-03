@@ -21,4 +21,4 @@ const NormalPlayer = (props) => {
   </div>
 };
 
-export default NormalPlayer;
+export default React.memo(NormalPlayer);

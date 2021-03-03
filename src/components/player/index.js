@@ -53,4 +53,4 @@ const Player = (props) => {
   </div >
 };
 
-export default Player;
+export default React.memo(Player);
