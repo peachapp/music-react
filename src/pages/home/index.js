@@ -1,27 +1,78 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import { Switch, Route, useHistory } from 'react-router-dom';
+import { TabBar } from 'zarm';
+import Faxian from './components/faxian/index';
+import Boke from './components/boke/index';
+import Wode from './components/wode/index';
+import Kge from './components/kge/index';
+import Yuncun from './components/yuncun/index';
+
 import './index.less';
 
-const HomeModel = () => {
-  const [count, setCount] = useState(0);
-  const [count2, setCount2] = useState(0);
-  useEffect(() => {
-    console.log('effect')
-    console.log('dom', document.getElementsByClassName('home-container')[0])
-  }, [count]);
-  return { count, setCount, count2, setCount2 };
-}
+const Home = (props) => {
+  const history = useHistory();
+  // props
 
-const Home = () => {
-  const { count, setCount, count2, setCount2 } = HomeModel();
+  // data
+  const [activeKey, setActiveKey] = useState("faxian");
+
+  // methods
+
+  useEffect(() => {
+    history.push(`/home/${activeKey}`);
+  }, [history, activeKey])
+
   return <div className="container home-container">
-    home
-    <div>count:{count}</div>
-    <button onClick={() => { setCount(count + 1) }}>+</button>
-    <button onClick={() => { setCount(count - 1) }}>-</button>
-    <hr />
-    <div>count:{count2}</div>
-    <button onClick={() => { setCount2(count2 + 1) }}>+</button>
-    <button onClick={() => { setCount2(count2 - 1) }}>-</button>
+    <div className="home-content">
+      <Switch>
+        <Route path='/home/' exact component={Faxian}></Route>
+        <Route path='/home/faxian' component={Faxian}></Route>
+        <Route path='/home/boke' component={Boke}></Route>
+        <Route path='/home/wode' component={Wode}></Route>
+        <Route path='/home/kge' component={Kge}></Route>
+        <Route path='/home/yuncun' component={Yuncun}></Route>
+      </Switch>
+    </div>
+    <TabBar
+      className="tabbar-container"
+      activeKey={activeKey}
+      onChange={setActiveKey}>
+      <TabBar.Item
+        itemKey="faxian"
+        title="发现"
+        icon={
+          <i className="iconfont iconshouye tabbar-icon" />
+        }
+      />
+      <TabBar.Item
+        itemKey="boke"
+        title="播客"
+        icon={
+          <i className="iconfont icondianshi tabbar-icon" />
+        }
+      />
+      <TabBar.Item
+        itemKey="wode"
+        title="我的"
+        icon={
+          <i className="iconfont iconhuiyuan tabbar-icon" />
+        }
+      />
+      <TabBar.Item
+        itemKey="kge"
+        title="K歌"
+        icon={
+          <i className="iconfont iconyinle tabbar-icon" />
+        }
+      />
+      <TabBar.Item
+        itemKey="yuncun"
+        title="云村"
+        icon={
+          <i className="iconfont iconpinglun tabbar-icon" />
+        }
+      />
+    </TabBar>
   </div>
 };
 
