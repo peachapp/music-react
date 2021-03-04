@@ -3,7 +3,8 @@ import ReactDOM from 'react-dom';
 import fastclick from 'fastclick';
 import App from 'App';
 import reportWebVitals from 'reportWebVitals';
-import 'antd-mobile/dist/antd-mobile.less'; // 引入官方提供的 less 样式入口文件
+import { ConfigProvider } from 'zarm'; // zarm全局配置
+import 'zarm/dist/zarm.css'; // 引入zarm官方提供的 css 样式入口文件
 import "common/reset.less";   // 清除浏览器默认样式
 
 fastclick.attach(document.body);
@@ -12,7 +13,10 @@ ReactDOM.render(
   // <React.StrictMode>
   //   <App />
   // </React.StrictMode>,
-  <App />,
+  <ConfigProvider primaryColor="#e20000" >
+    <App />
+  </ConfigProvider>
+  ,
   document.getElementById('root')
 );
 

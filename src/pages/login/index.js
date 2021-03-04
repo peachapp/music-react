@@ -1,12 +1,9 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useHistory } from 'react-router-dom';
-import { InputItem, Button, Checkbox, Toast } from 'antd-mobile';
+import { Cell, Input, Button, Checkbox, Toast } from 'zarm';
 import { getCaptcha, verifyCaptcha, loginInPhone } from 'axios/api/login';
 import { phonePattern } from 'common/validate';
 import './index.less';
-
-const AgreeItem = Checkbox.AgreeItem;
-
 
 const Login = () => {
   const history = useHistory();
@@ -28,16 +25,25 @@ const Login = () => {
   const onGetCaptcha = async () => {
     try {
       if (!phoneByCode) {
-        Toast.info(`请输入手机号！`);
+        Toast.show({
+          content: `请输入手机号！`,
+          mask: true,
+        });
         return false;
       };
       if (!phonePattern.test(phoneByCode)) {
-        Toast.info(`请输入正确的手机号！`);
+        Toast.show({
+          content: `请输入正确的手机号！`,
+          mask: true,
+        });
         return false;
       };
       const res = await getCaptcha({ phone: phoneByCode });
       if (res.code === 200) {
-        Toast.success(`验证码已发送`);
+        Toast.show({
+          content: `验证码已发送`,
+          mask: true,
+        });
       };
     } catch (error) {
       console.log(error);
@@ -48,7 +54,10 @@ const Login = () => {
     try {
       if (!agreeChecked) {
         setAgreeItemClass("rubberBand");
-        Toast.info(`请同意用户协议！`);
+        Toast.show({
+          content: `请同意用户协议！`,
+          mask: true
+        });
         let timer = setTimeout(function () {
           setAgreeItemClass("");
           clearTimeout(timer);
@@ -59,35 +68,56 @@ const Login = () => {
 
       if (loginType === "0") {
         if (!phoneByCode) {
-          Toast.info(`请输入手机号！`);
+          Toast.show({
+            content: `请输入手机号！`,
+            mask: true
+          });
           return false;
         };
         if (!phonePattern.test(phoneByCode)) {
-          Toast.info(`请输入正确的手机号！`);
+          Toast.show({
+            content: `请输入正确的手机号！`,
+            mask: true
+          });
           return false;
         };
         if (!code) {
-          Toast.info(`请输入验证码！`);
+          Toast.show({
+            content: `请输入验证码！`,
+            mask: true
+          });
           return false;
         };
         const res = await verifyCaptcha({ phone: phoneByCode, captcha: code });
         console.log('验证码res', res);
       } else {
         if (!phoneBypass) {
-          Toast.info(`请输入手机号！`);
+          Toast.show({
+            content: `请输入手机号！`,
+            mask: true
+          });
           return false;
         };
         if (!phonePattern.test(phoneBypass)) {
-          Toast.info(`请输入正确的手机号！`);
+          Toast.show({
+            content: `请输入正确的手机号！`,
+            mask: true
+          });
           return false;
         };
         if (!password) {
-          Toast.info(`请输入密码！`);
+          Toast.show({
+            content: `请输入密码！`,
+            mask: true
+          });
           return false;
         };
         const res = await loginInPhone({ phone: phoneBypass, password: password });
         if (res.code === 200) {
-          Toast.success(`登录成功`);
+          Toast.show({
+            content: `登录成功`,
+            mask: true
+          });
           localStorage.setItem('token', res.token);
           localStorage.setItem('userinfo', JSON.stringify({
             account: res.account,
@@ -107,25 +137,29 @@ const Login = () => {
     if (loginType === "0") {
       return <div className="login-content login-content-code" key="login-content-code">
         <div className="login-box login-box-code">
-          <InputItem
-            type="number"
-            maxLength="11"
-            className="login-input"
-            clear
-            placeholder="请输入手机号"
-            value={phoneByCode}
-            onChange={setPhoneByCode}
-          />
-          <InputItem
-            type="number"
-            maxLength="4"
-            className="login-input"
-            clear
-            placeholder="获取验证码"
-            value={code}
-            onChange={setCode}
-            extra={<div onClick={onGetCaptcha}>获取验证码</div>}
-          />
+          <Cell title="手机号">
+            <Input
+              type="number"
+              maxLength={11}
+              className="login-input"
+              clearable
+              placeholder="请输入手机号"
+              value={phoneByCode}
+              onChange={setPhoneByCode}
+            />
+          </Cell>
+          <Cell title="验证码">
+            <Input
+              type="number"
+              maxLength={4}
+              className="login-input"
+              clearable
+              placeholder="获取验证码"
+              value={code}
+              onChange={setCode}
+              extra={<div onClick={onGetCaptcha}>获取验证码</div>}
+            />
+          </Cell>
         </div>
         <div className="login-switch"><span onClick={() => { setLoginType('1'); }}>密码登录</span></div>
       </div>
@@ -133,23 +167,27 @@ const Login = () => {
 
     return <div className="login-content login-content-pass" key="login-content-pass">
       <div className="login-box login-box-pass">
-        <InputItem
-          type="number"
-          maxLength="11"
-          className="login-input"
-          clear
-          placeholder="请输入手机号"
-          value={phoneBypass}
-          onChange={setPhoneBypass}
-        />
-        <InputItem
-          type="password"
-          className="login-input"
-          clear
-          placeholder="请输入密码"
-          value={password}
-          onChange={setPassword}
-        />
+        <Cell title="手机号">
+          <Input
+            type="number"
+            maxLength={11}
+            className="login-input"
+            clearable
+            placeholder="请输入手机号"
+            value={phoneBypass}
+            onChange={setPhoneBypass}
+          />
+        </Cell>
+        <Cell title="密码">
+          <Input
+            type="password"
+            className="login-input"
+            clearable
+            placeholder="请输入密码"
+            value={password}
+            onChange={setPassword}
+          />
+        </Cell>
       </div>
       <div className="login-switch"><span onClick={() => { setLoginType('0'); }}>验证码登录</span></div>
     </div>
@@ -162,13 +200,16 @@ const Login = () => {
       </svg>
     </div>
     {renderLoginBox()}
-    <Button className="login-btn" type="primary" onClick={onSubmit}>登录</Button>
-    <AgreeItem className={["agree-item", "animated", agreeItemClass]} checked={agreeChecked} onChange={e => { setAgreeChecked(e.target.checked) }}>
-      <span>同意</span>
-      <span onClick={(e) => { e.preventDefault(); alert('agree it'); }}>《用户协议》</span>
-      <span onClick={(e) => { e.preventDefault(); alert('agree it'); }}>《隐私政策》</span>
-      <span onClick={(e) => { e.preventDefault(); alert('agree it'); }}>《儿童隐私政策》</span>
-    </AgreeItem>
+    <Button className="login-btn" theme="primary" onClick={onSubmit}>登录</Button>
+    <div className={["agreement-container", "animated", agreeItemClass].join(" ")} >
+      <Checkbox id="agreement" checked={agreeChecked} onChange={e => { setAgreeChecked(e.target.checked) }} />
+      <label htmlFor="agreement">
+        <span>同意</span>
+        <span onClick={(e) => { e.preventDefault(); alert('agree it'); }}>《用户协议》</span>
+        <span onClick={(e) => { e.preventDefault(); alert('agree it'); }}>《隐私政策》</span>
+        <span onClick={(e) => { e.preventDefault(); alert('agree it'); }}>《儿童隐私政策》</span>
+      </label>
+    </div>
   </div>
 };
 

@@ -6,7 +6,6 @@
   align-items: center;
 
   .login-logo {
-    margin-bottom: 64px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -20,7 +19,7 @@
 
   .login-content {
     width: 100%;
-    margin: 32px 0;
+    margin: 32px 0 24px;
   }
 
   .login-box {
@@ -28,14 +27,10 @@
   }
 
   .login-box {
-    margin-bottom: 32px;
+    margin-bottom: 24px;
   }
 
-  .login-input .am-list-line {
-    position: relative;
-  }
-
-  .login-input .am-list-line::after {
+  .login-box .za-cell:after {
     content: "";
     position: absolute;
     background-color: #ddd;
@@ -62,35 +57,21 @@
     border-radius: 22px;
   }
 
-  .agree-item {
-    margin-left: 0;
+  .agreement-container {
+    margin-top: 12px;
     opacity: 0.6;
   }
 
-  .agree-item span {
-    font-size: 10px;
-    color: @brand-primary;
+  .agreement-container .za-checkbox {
+    margin-right: 4px;
   }
 
-  .agree-item .am-checkbox-wrapper {
-    margin-left: 18px;
-  }
-
-  .agree-item .am-checkbox {
-    width: 18px;
-  }
-
-  .agree-item .am-checkbox-inner {
-    top: 14px;
-    width: 16px;
-    height: 16px;
+  .agreement-container .za-checkbox__inner {
     border-color: @brand-primary;
   }
 
-  .agree-item .am-checkbox-inner:after {
-    top: 1px;
-    right: 4px;
-    width: 5px;
-    height: 8px;
+  .agreement-container label span {
+    font-size: 10px;
+    color: @brand-primary;
   }
 }
