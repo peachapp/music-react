@@ -162,7 +162,8 @@
   },
   "theme": {
     "brand-primary": "#e20000",
-    "color-text-base": "#333"
+    "color-text-base": "#333",
+    "color-text-base2": "#666"
   },
   "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
   "main": "index.js",
