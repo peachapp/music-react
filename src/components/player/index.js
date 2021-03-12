@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import MiniPlayer from 'components/miniPlayer/index';
+import NormalPlayer from 'components/normalPlayer/index';
 import "./index.less";
 
 const Player = (props) => {
@@ -49,7 +50,8 @@ const Player = (props) => {
     // onError={this.onError}
     // ref={(audio) => { this.audio = audio }}
     />
-    <MiniPlayer {...props} />
+    {/* <MiniPlayer {...props} /> */}
+    <NormalPlayer {...props} />
   </div >
 };
 
