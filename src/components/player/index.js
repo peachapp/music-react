@@ -8,7 +8,7 @@ const Player = (props) => {
   const { src, imgUrl, musicName, playStatus, onPlayStatusChange, onPlayListView } = props || {};
 
   // data
-  const [currentTime, setCurrentTime] = useState(0);
+  const [progress, setProgress] = useState(0);
 
   // ref
   const audioRef = useRef();
@@ -16,11 +16,14 @@ const Player = (props) => {
 
 
   // methods
-  const updateTime = e => {
-    setCurrentTime(e.target.currentTime);
+  const onTimeUpdate = () => {
+    const { currentTime, duration } = audioRef.current;
+    const progress = currentTime / duration;
+    setProgress(progress * 100);
   };
 
-  const handleEnd = () => {
+  const onEnded = () => {
+    console.log('onEnded', audioRef)
     // if (mode === playMode.loop) {
     //   handleLoop();
     // } else {
@@ -28,30 +31,33 @@ const Player = (props) => {
     // }
   };
 
-  const handleError = () => {
+  const onError = () => {
+    console.log('onError', audioRef)
     // songReady.current = true;
     // handleNext();
     // alert("播放出错");
   };
 
+  const onProgressChange = (value) => {
+    const { duration } = audioRef.current;
+    audioRef.current.currentTime = value * duration / 100;
+  }
+
 
   return <div className="audio-container">
     <audio
+      autoPlay
       className="audio"
-      // autoPlay={running}
-      // loop={playMode.value === 'loop' || playlist.length === 1}
-      src={src}
       ref={audioRef}
-      onTimeUpdate={updateTime}
-      onEnded={handleEnd}
-      onError={handleError}
-    // onTimeUpdate={this.onTimeUpdate}
-    // onEnded={this.next}
-    // onError={this.onError}
-    // ref={(audio) => { this.audio = audio }}
-    />
+      onTimeUpdate={onTimeUpdate}
+      onEnded={onEnded}
+      onError={onError}
+    >
+      <source src={src} />
+      您的浏览器不支持 audio 元素。
+    </audio>
     {/* <MiniPlayer {...props} /> */}
-    <NormalPlayer {...props} />
+    <NormalPlayer {...props} progress={progress} onProgressChange={onProgressChange} />
   </div >
 };
 

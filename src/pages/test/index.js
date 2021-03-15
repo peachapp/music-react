@@ -5,7 +5,7 @@ import "./index.less";
 const Test = () => {
   return <div className="container test-container">
     <Player
-      src="http://m10.music.126.net/20210301160755/2d7ecb3a3899c97046cd89d520799427/ymusic/5353/0f0f/0358/d99739615f8e5153d77042092f07fd77.mp3"
+      src="https://audio04.dmhmusic.com/71_53_T10059129149_128_4_1_0_sdk-cpm/cn/0412/M00/90/0A/ChAKEmBFoCuAcZ4rACUFub7q1kk144.mp3?xcode=6d8888bf320ff8977e6f34086caac4ce3972c9b"
       imgUrl="https://img01.yzcdn.cn/vant/cat.jpeg"
       musicName="系数是"
       playStatus="play"

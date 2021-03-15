@@ -3,9 +3,11 @@ import { Slider } from 'zarm';
 import "./index.less";
 
 const NormalPlayer = (props) => {
+  // props
+  const { progress, onProgressChange } = props || {};
 
   // data
-  const { value, setValue } = useState(0);
+
 
 
   return <div className="normal-player-container">
@@ -39,7 +41,7 @@ const NormalPlayer = (props) => {
         </div>
       </div>
       <div className="normal-player-slider">
-        <Slider value={value} onChange={setValue} />
+        <Slider value={progress} onChange={onProgressChange} />
       </div>
       <div className="normal-player-operations">
         <div className="normal-player-operation-item">
