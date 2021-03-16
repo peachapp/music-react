@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { Carousel, Button, Icon } from 'zarm';
@@ -11,8 +11,10 @@ const Faxian = (props) => {
   // props
 
   // data
-  const banners = useSelector(state => state.banners);
-  const homePersonalizeds = useSelector(state => state.homePersonalizeds);
+  const [banners, setBanners] = useState([]);
+  const [personalizeds, setPersonalizeds] = useState([]);
+  const [playlistTags, setPlaylistTags] = useState([]);
+  const [activePlaylistIndex, setActivePlaylistIndex] = useState(0);
 
   const dispatch = useDispatch();
 
@@ -21,7 +23,7 @@ const Faxian = (props) => {
     try {
       const res = await getBanner({ type: 2 });
       if (res.code === 200) {
-        dispatch({ type: 'UPDATE_banners', value: res.banners });
+        setBanners(res.banners);
       };
     } catch (error) {
       console.log(error);
@@ -33,7 +35,7 @@ const Faxian = (props) => {
     try {
       const res = await getPersonalized({ limit: 7 });
       if (res.code === 200) {
-        dispatch({ type: 'UPDATE_homePersonalizeds', value: res.result })
+        setPersonalizeds(res.result);
       };
     } catch (error) {
       console.log(error);
@@ -133,7 +135,74 @@ const Faxian = (props) => {
       </div>
       <div className="tuijiangedan">
         {
-          homePersonalizeds.map((personalizedItem) => {
+          personalizeds.map((personalizedItem) => {
+            return <div className="tuijiangedan-item" key={personalizedItem.id} onClick={() => { onPersonalizedClick(personalizedItem.id) }}>
+              <div className="tuijiangedan-playcount">{bigNumberTransform(personalizedItem.playCount)}</div>
+              <img className="tuijiangedan-img" src={personalizedItem.picUrl} alt="" draggable={false} />
+              <div className="tuijiangedan-name">{personalizedItem.name}</div>
+            </div>
+          })
+        }
+      </div>
+    </div>
+    {/* 精品歌单/私人定制 */}
+    <div className="tuijiangedan-container">
+      <div className="title">
+        <div className="title-text">
+          私人定制-
+          {(playlistTags[activePlaylistIndex] || {}).name}
+          <i className="iconfont iconshuaxin" style={{ 'marginLeft': '5px' }} />
+        </div>
+        <Button size="xs" shape="round">
+          <i className="iconfont iconbofang1 title-icon" />
+          播放
+        </Button>
+      </div>
+      <div className="tuijiangedan">
+        {
+          personalizeds.map((personalizedItem) => {
+            return <div className="tuijiangedan-item" key={personalizedItem.id} onClick={() => { onPersonalizedClick(personalizedItem.id) }}>
+              <div className="tuijiangedan-playcount">{bigNumberTransform(personalizedItem.playCount)}</div>
+              <img className="tuijiangedan-img" src={personalizedItem.picUrl} alt="" draggable={false} />
+              <div className="tuijiangedan-name">{personalizedItem.name}</div>
+            </div>
+          })
+        }
+      </div>
+    </div>
+    {/* 精选音乐视频 */}
+    <div className="tuijiangedan-container">
+      <div className="title">
+        <div className="title-text">精选音乐视频</div>
+        <Button size="xs" shape="round">
+          更多
+          <Icon className="title-icon" type="arrow-right" />
+        </Button>
+      </div>
+      <div className="tuijiangedan">
+        {
+          personalizeds.map((personalizedItem) => {
+            return <div className="tuijiangedan-item" key={personalizedItem.id} onClick={() => { onPersonalizedClick(personalizedItem.id) }}>
+              <div className="tuijiangedan-playcount">{bigNumberTransform(personalizedItem.playCount)}</div>
+              <img className="tuijiangedan-img" src={personalizedItem.picUrl} alt="" draggable={false} />
+              <div className="tuijiangedan-name">{personalizedItem.name}</div>
+            </div>
+          })
+        }
+      </div>
+    </div>
+    {/* 桃桃康的雷达歌单 */}
+    <div className="tuijiangedan-container">
+      <div className="title">
+        <div className="title-text">桃桃康的雷达歌单</div>
+        <Button size="xs" shape="round">
+          更多
+          <Icon className="title-icon" type="arrow-right" />
+        </Button>
+      </div>
+      <div className="tuijiangedan">
+        {
+          personalizeds.map((personalizedItem) => {
             return <div className="tuijiangedan-item" key={personalizedItem.id} onClick={() => { onPersonalizedClick(personalizedItem.id) }}>
               <div className="tuijiangedan-playcount">{bigNumberTransform(personalizedItem.playCount)}</div>
               <img className="tuijiangedan-img" src={personalizedItem.picUrl} alt="" draggable={false} />
