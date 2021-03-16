@@ -9,3 +9,12 @@ export const getBanner = data => {
   })
 };
 
+// 获取推荐歌单
+export const getPersonalized = data => {
+  return service({
+    url: `/personalized`,
+    method: 'get',
+    params: data
+  })
+};
+

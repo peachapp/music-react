@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Carousel } from 'zarm';
-import { getBanner } from 'axios/api/home';
+import { Carousel, Button, Icon } from 'zarm';
+import { getBanner, getPersonalized } from 'axios/api/home';
+import { bigNumberTransform } from 'common/utils';
 import './index.less';
 
 const Faxian = (props) => {
@@ -10,11 +11,12 @@ const Faxian = (props) => {
 
   // data
   const [banners, setBanners] = useState([]);
+  const [personalizeds, setPersonalizeds] = useState([]);
 
   // onGetBanner
   const onGetBanner = async () => {
     try {
-      const res = await getBanner();
+      const res = await getBanner({ type: 2 });
       if (res.code === 200) {
         setBanners(res.banners);
       };
@@ -23,8 +25,21 @@ const Faxian = (props) => {
     }
   };
 
+  // onGetPersonalized
+  const onGetPersonalized = async () => {
+    try {
+      const res = await getPersonalized({ limit: 7 });
+      if (res.code === 200) {
+        setPersonalizeds(res.result);
+      };
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
-    onGetBanner()
+    onGetBanner();
+    onGetPersonalized();
   }, []);
 
   // methods
@@ -33,6 +48,15 @@ const Faxian = (props) => {
       return false;
     };
     window.location.href = url;
+  };
+
+  const onPersonalizedClick = (id) => {
+    history.push({
+      pathname: "/gedan",
+      params: {
+        id
+      }
+    });
   };
 
   return <div className="faxian-container">
@@ -49,12 +73,12 @@ const Faxian = (props) => {
       </div>
     </div>
     {/* 轮播图 */}
-    <Carousel className="banner-container">
+    <Carousel className="banner-container" loop>
       {
         banners.map((bannerItem, bannerIndex) => {
           return (
             <div className="banner-item" key={bannerIndex} onClick={() => { onBannerClick(bannerItem.url) }}>
-              <img className="banner-img" src={bannerItem.imageUrl} alt="" draggable={false} />
+              <img className="banner-img" src={bannerItem.pic} alt="" draggable={false} />
             </div>
           );
         })
@@ -96,7 +120,26 @@ const Faxian = (props) => {
       </div>
     </div>
     {/* 推荐歌单 */}
-    <div></div>
+    <div className="tuijiangedan-container">
+      <div className="title">
+        <div className="title-text">推荐歌单</div>
+        <Button size="xs" shape="round">
+          更多
+          <Icon className="title-icon" type="arrow-right" />
+        </Button>
+      </div>
+      <div className="tuijiangedan">
+        {
+          personalizeds.map((personalizedItem) => {
+            return <div className="tuijiangedan-item" key={personalizedItem.id} onClick={() => { onPersonalizedClick(personalizedItem.id) }}>
+              <div className="tuijiangedan-playcount">{bigNumberTransform(personalizedItem.playCount)}</div>
+              <img className="tuijiangedan-img" src={personalizedItem.picUrl} alt="" draggable={false} />
+              <div className="tuijiangedan-name">{personalizedItem.name}</div>
+            </div>
+          })
+        }
+      </div>
+    </div>
   </div>
 };
 
