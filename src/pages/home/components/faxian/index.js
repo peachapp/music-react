@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useEffect, useCallback } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { Carousel, Button, Icon } from 'zarm';
 import { getBanner, getPersonalized } from 'axios/api/home';
@@ -10,15 +11,17 @@ const Faxian = (props) => {
   // props
 
   // data
-  const [banners, setBanners] = useState([]);
-  const [personalizeds, setPersonalizeds] = useState([]);
+  const banners = useSelector(state => state.banners);
+  const homePersonalizeds = useSelector(state => state.homePersonalizeds);
+
+  const dispatch = useDispatch();
 
   // onGetBanner
   const onGetBanner = async () => {
     try {
       const res = await getBanner({ type: 2 });
       if (res.code === 200) {
-        setBanners(res.banners);
+        dispatch({ type: 'UPDATE_banners', value: res.banners });
       };
     } catch (error) {
       console.log(error);
@@ -30,7 +33,7 @@ const Faxian = (props) => {
     try {
       const res = await getPersonalized({ limit: 7 });
       if (res.code === 200) {
-        setPersonalizeds(res.result);
+        dispatch({ type: 'UPDATE_homePersonalizeds', value: res.result })
       };
     } catch (error) {
       console.log(error);
@@ -130,7 +133,7 @@ const Faxian = (props) => {
       </div>
       <div className="tuijiangedan">
         {
-          personalizeds.map((personalizedItem) => {
+          homePersonalizeds.map((personalizedItem) => {
             return <div className="tuijiangedan-item" key={personalizedItem.id} onClick={() => { onPersonalizedClick(personalizedItem.id) }}>
               <div className="tuijiangedan-playcount">{bigNumberTransform(personalizedItem.playCount)}</div>
               <img className="tuijiangedan-img" src={personalizedItem.picUrl} alt="" draggable={false} />

@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useEffect, useCallback } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { Switch, Route, useHistory } from 'react-router-dom';
 import { TabBar } from 'zarm';
 import Faxian from './components/faxian/index';
@@ -14,13 +15,15 @@ const Home = (props) => {
   // props
 
   // data
-  const [activeKey, setActiveKey] = useState("faxian");
+  const homeActiveSubroute = useSelector(state => state.homeActiveSubroute);
+
+  const dispatch = useDispatch();
 
   // methods
 
   useEffect(() => {
-    history.push(`/home/${activeKey}`);
-  }, [history, activeKey])
+    history.push(`/home/${homeActiveSubroute}`);
+  }, [history, homeActiveSubroute])
 
   return <div className="container home-container">
     <div className="home-content">
@@ -35,8 +38,8 @@ const Home = (props) => {
     </div>
     <TabBar
       className="tabbar-container"
-      activeKey={activeKey}
-      onChange={setActiveKey}>
+      activeKey={homeActiveSubroute}
+      onChange={(value) => { dispatch({ type: 'UPDATE_homeActiveSubroute', value }) }}>
       <TabBar.Item
         itemKey="faxian"
         title="发现"
