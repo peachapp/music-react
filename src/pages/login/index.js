@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { Cell, Input, Button, Checkbox, Toast } from 'zarm';
 import { getCaptcha, verifyCaptcha, loginInPhone } from 'axios/api/login';
@@ -9,20 +8,15 @@ import './index.less';
 const Login = () => {
   const history = useHistory();
   // data
-  const loginType = useSelector(state => state.loginType); // 0:验证码登录; 1:密码登录
+  const [loginType, setLoginType] = useState("1"); // 0:验证码登录; 1:密码登录
 
-  // 验证码登录
-  const phoneByCode = useSelector(state => state.phoneByCode);
-  const code = useSelector(state => state.code);
+  const [phoneByCode, setPhoneByCode] = useState("");
+  const [code, setCode] = useState("");
 
-  // 密码登录
-  const phoneBypass = useSelector(state => state.phoneBypass);
-  const password = useSelector(state => state.password);
+  const [phoneBypass, setPhoneBypass] = useState("");
+  const [password, setPassword] = useState("");
 
-  // 是否同意用户协议
-  const agreeChecked = useSelector(state => state.agreeChecked);
-
-  const dispatch = useDispatch();
+  const [agreeChecked, setAgreeChecked] = useState(false);
 
   const [agreeItemClass, setAgreeItemClass] = useState("");
 
@@ -151,7 +145,7 @@ const Login = () => {
               clearable
               placeholder="请输入手机号"
               value={phoneByCode}
-              onChange={(value) => { dispatch({ type: 'UPDATE_phoneByCode', value }) }}
+              onChange={setPhoneByCode}
             />
           </Cell>
           <Cell title="验证码">
@@ -162,12 +156,12 @@ const Login = () => {
               clearable
               placeholder="获取验证码"
               value={code}
-              onChange={(value) => { dispatch({ type: 'UPDATE_code', value }) }}
+              onChange={setCode}
               extra={<div onClick={onGetCaptcha}>获取验证码</div>}
             />
           </Cell>
         </div>
-        <div className="login-switch"><span onClick={() => { dispatch({ type: 'UPDATE_loginType', value: '1' }); }}>密码登录</span></div>
+        <div className="login-switch"><span onClick={() => { setLoginType('1'); }}>密码登录</span></div>
       </div>
     };
 
@@ -181,7 +175,7 @@ const Login = () => {
             clearable
             placeholder="请输入手机号"
             value={phoneBypass}
-            onChange={(value) => { dispatch({ type: 'UPDATE_phoneBypass', value }) }}
+            onChange={setPhoneBypass}
           />
         </Cell>
         <Cell title="密码">
@@ -191,11 +185,11 @@ const Login = () => {
             clearable
             placeholder="请输入密码"
             value={password}
-            onChange={(value) => { dispatch({ type: 'UPDATE_password', value }) }}
+            onChange={setPassword}
           />
         </Cell>
       </div>
-      <div className="login-switch"><span onClick={() => { dispatch({ type: 'UPDATE_loginType', value: '0' }); }}>验证码登录</span></div>
+      <div className="login-switch"><span onClick={() => { setLoginType('0'); }}>验证码登录</span></div>
     </div>
   };
 
@@ -208,7 +202,7 @@ const Login = () => {
     {renderLoginBox()}
     <Button className="login-btn" theme="primary" onClick={onSubmit}>登录</Button>
     <div className={["agreement-container", "animated", agreeItemClass].join(" ")} >
-      <Checkbox id="agreement" checked={agreeChecked} onChange={e => { dispatch({ type: 'UPDATE_agreeChecked', value: e.target.checked }) }} />
+      <Checkbox id="agreement" checked={agreeChecked} onChange={e => { setAgreeChecked(e.target.checked) }} />
       <label htmlFor="agreement">
         <span>同意</span>
         <span onClick={(e) => { e.preventDefault(); alert('agree it'); }}>《用户协议》</span>

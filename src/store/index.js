@@ -1,11 +1,9 @@
 // index.js 
 import { combineReducers, createStore } from 'redux'
-import * as home from './home'
-import * as login from './login'
+import * as model from './model'
 
 const reducers = combineReducers({
-  ...home,
-  ...login
+  ...model
 });
 
 const store = createStore(reducers)
