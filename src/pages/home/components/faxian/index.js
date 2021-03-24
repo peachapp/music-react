@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { Carousel, Button, Icon } from 'zarm';
-import { getBanner, getPersonalized } from 'axios/api/home';
+import { getBanner, getFindBall, getPersonalized } from 'axios/api/home';
 import { bigNumberTransform } from 'common/utils';
 import './index.less';
 
@@ -12,6 +12,7 @@ const Faxian = (props) => {
 
   // data
   const [banners, setBanners] = useState([]);
+  const [findBalls, setFindBalls] = useState([]);
   const [personalizeds, setPersonalizeds] = useState([]);
   const [playlistTags, setPlaylistTags] = useState([]);
   const [activePlaylistIndex, setActivePlaylistIndex] = useState(0);
@@ -23,7 +24,19 @@ const Faxian = (props) => {
     try {
       const res = await getBanner({ type: 2 });
       if (res.code === 200) {
-        setBanners(res.banners);
+        setBanners(res.banners || []);
+      };
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  // onGetFindBall
+  const onGetFindBall = async () => {
+    try {
+      const res = await getFindBall();
+      if (res.code === 200) {
+        setFindBalls(res.data || []);
       };
     } catch (error) {
       console.log(error);
@@ -35,7 +48,7 @@ const Faxian = (props) => {
     try {
       const res = await getPersonalized({ limit: 7 });
       if (res.code === 200) {
-        setPersonalizeds(res.result);
+        setPersonalizeds(res.result || []);
       };
     } catch (error) {
       console.log(error);
@@ -44,11 +57,19 @@ const Faxian = (props) => {
 
   useEffect(() => {
     onGetBanner();
+    onGetFindBall();
     onGetPersonalized();
   }, []);
 
   // methods
   const onBannerClick = (url) => {
+    if (!url) {
+      return false;
+    };
+    window.location.href = url;
+  };
+
+  const onFindBallClick = (url) => {
     if (!url) {
       return false;
     };
@@ -91,38 +112,14 @@ const Faxian = (props) => {
     </Carousel>
     {/* 菜单 */}
     <div className="menu-container">
-      <div className="menu-item">
-        <img className="menu-img" src="https://static.zhongan.com/website/health/zarm/images/banners/1.png" alt="" />
-        <span className="menu-text">每日推荐</span>
-      </div>
-      <div className="menu-item">
-        <img className="menu-img" src="https://static.zhongan.com/website/health/zarm/images/banners/1.png" alt="" />
-        <span className="menu-text">私人FM</span>
-      </div>
-      <div className="menu-item">
-        <img className="menu-img" src="https://static.zhongan.com/website/health/zarm/images/banners/1.png" alt="" />
-        <span className="menu-text">歌单</span>
-      </div>
-      <div className="menu-item">
-        <img className="menu-img" src="https://static.zhongan.com/website/health/zarm/images/banners/1.png" alt="" />
-        <span className="menu-text">排行榜</span>
-      </div>
-      <div className="menu-item">
-        <img className="menu-img" src="https://static.zhongan.com/website/health/zarm/images/banners/1.png" alt="" />
-        <span className="menu-text">直播</span>
-      </div>
-      <div className="menu-item">
-        <img className="menu-img" src="https://static.zhongan.com/website/health/zarm/images/banners/1.png" alt="" />
-        <span className="menu-text">数字专辑</span>
-      </div>
-      <div className="menu-item">
-        <img className="menu-img" src="https://static.zhongan.com/website/health/zarm/images/banners/1.png" alt="" />
-        <span className="menu-text">歌房</span>
-      </div>
-      <div className="menu-item">
-        <img className="menu-img" src="https://static.zhongan.com/website/health/zarm/images/banners/1.png" alt="" />
-        <span className="menu-text">游戏专区</span>
-      </div>
+      {
+        findBalls.map((findBallItem) => {
+          return <div className="menu-item" key={findBallItem.id} onClick={() => { onFindBallClick(findBallItem.url) }}>
+            <img className="menu-img" src={findBallItem.iconUrl} alt="" />
+            <span className="menu-text">{findBallItem.name}</span>
+          </div>
+        })
+      }
     </div>
     {/* 推荐歌单 */}
     <div className="tuijiangedan-container">

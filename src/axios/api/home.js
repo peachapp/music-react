@@ -9,6 +9,15 @@ export const getBanner = data => {
   })
 };
 
+// 首页-发现-圆形图标入口列表
+export const getFindBall = data => {
+  return service({
+    url: `/homepage/dragon/ball`,
+    method: 'get',
+    params: data
+  })
+};
+
 // 获取推荐歌单
 export const getPersonalized = data => {
   return service({
