@@ -1,6 +1,7 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import { Progress } from 'zarm';
 import "./index.less";
 
 const MiniPlayer = (props) => {
@@ -15,6 +16,7 @@ const MiniPlayer = (props) => {
   const currentSongList = useSelector(state => state.currentSongList);
   const currentSongIndex = useSelector(state => state.currentSongIndex);
   const currentSongStatus = useSelector(state => state.currentSongStatus);
+  const currentSongProgress = useSelector(state => state.currentSongProgress);
   const currentSong = currentSongList[currentSongIndex];
 
   const dispatch = useDispatch();
@@ -44,9 +46,21 @@ const MiniPlayer = (props) => {
     <img className="mini-player-img" src={currentSong.picUrl} alt="" />
     <div className="mini-player-name">{currentSong.musicName}-{currentSong.ar}</div>
     <div className="mini-player-status" onClick={onPlayStatusChange}>
-      <svg aria-hidden="true" className="mini-player-status-icon">
+      <Progress
+        size="30px"
+        shape="circle"
+        strokeShape="round"
+        strokeWidth={1}
+        percent={currentSongProgress}
+        text={(percent) => (
+          <svg aria-hidden="true" className="mini-player-status-icon">
+            <use xlinkHref={`#${currentSongStatus === "play" ? "iconzanting" : "iconbofang"}`} />
+          </svg>
+        )}
+      />
+      {/* <svg aria-hidden="true" className="mini-player-status-icon">
         <use xlinkHref={`#${currentSongStatus === "play" ? "iconzanting" : "iconbofang"}`} />
-      </svg>
+      </svg> */}
     </div>
     <div className="mini-player-more" onClick={onPlayListView}>
       <svg aria-hidden="true" className="mini-player-more-icon">
