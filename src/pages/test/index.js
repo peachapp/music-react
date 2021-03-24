@@ -1,5 +1,5 @@
 import React from 'react';
-import Player from 'components/player/index';
+import Player from 'pages/player/index';
 import "./index.less";
 
 const Test = () => {

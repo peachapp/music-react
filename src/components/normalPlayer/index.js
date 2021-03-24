@@ -1,13 +1,20 @@
 import React, { useRef } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { Slider } from 'zarm';
 import "./index.less";
 
 const NormalPlayer = (props) => {
   // props
-  const { progress, onProgressChange } = props || {};
 
   // data
+  const currentSongProgress = useSelector(state => state.currentSongProgress);
+  const audioRef = useSelector(state => state.audioRef);
 
+  // methods
+  const onProgressChange = (value) => {
+    const { duration } = audioRef.current;
+    audioRef.current.currentTime = value * duration / 100;
+  }
 
 
   return <div className="normal-player-container">
@@ -41,7 +48,7 @@ const NormalPlayer = (props) => {
         </div>
       </div>
       <div className="normal-player-slider">
-        <Slider value={progress} onChange={onProgressChange} />
+        <Slider value={currentSongProgress} onChange={onProgressChange} />
       </div>
       <div className="normal-player-operations">
         <div className="normal-player-operation-item">
