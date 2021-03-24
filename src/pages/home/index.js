@@ -2,6 +2,7 @@ import React, { useEffect, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Switch, Route, useHistory } from 'react-router-dom';
 import { TabBar } from 'zarm';
+import MiniPlayer from 'components/miniPlayer';
 import Faxian from './components/faxian/index';
 import Boke from './components/boke/index';
 import Wode from './components/wode/index';
@@ -16,6 +17,7 @@ const Home = (props) => {
 
   // data
   const homeActiveSubroute = useSelector(state => state.homeActiveSubroute);
+  const currentSong = useSelector(state => state.currentSong);
 
   const dispatch = useDispatch();
 
@@ -25,7 +27,7 @@ const Home = (props) => {
     history.push(`/home/${homeActiveSubroute}`);
   }, [history, homeActiveSubroute])
 
-  return <div className="container home-container">
+  return <div className={`container home-container ${currentSong ? 'home-container-mini' : ''}`}>
     <div className="home-content">
       <Switch>
         <Route path='/home/' exact component={Faxian}></Route>
@@ -36,6 +38,7 @@ const Home = (props) => {
         <Route path='/home/yuncun' component={Yuncun}></Route>
       </Switch>
     </div>
+    {currentSong ? <MiniPlayer className="home-miniplayer" /> : ""}
     <TabBar
       className="tabbar-container"
       activeKey={homeActiveSubroute}

@@ -2,9 +2,9 @@ import React from 'react';
 import "./index.less";
 
 const MiniPlayer = (props) => {
-  const { imgUrl, musicName, playStatus, onPlayStatusChange, onPlayListView } = props || {};
+  const { imgUrl, musicName, playStatus, onPlayStatusChange, onPlayListView, className } = props || {};
 
-  return <div className="mini-player-container">
+  return <div className={`mini-player-container ${className || ""}`}>
     <img className="mini-player-img" src={imgUrl} alt="" />
     <div className="mini-player-name">{musicName}</div>
     <div className="mini-player-status" onClick={onPlayStatusChange}>
