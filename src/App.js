@@ -8,7 +8,9 @@ const App = () => {
   const audioRef = useRef();
 
   // data
-  const currentSong = useSelector(state => state.currentSong);
+  const currentSongList = useSelector(state => state.currentSongList);
+  const currentSongIndex = useSelector(state => state.currentSongIndex);
+  const currentSong = currentSongList[currentSongIndex];
 
   const dispatch = useDispatch();
 
@@ -18,6 +20,18 @@ const App = () => {
   }, [dispatch, audioRef])
 
   // methods
+  const onLoadedData = () => {
+    audioRef.current.play();
+  };
+
+  const onPlay = () => {
+    dispatch({ type: 'UPDATE_currentSongStatus', value: 'play' });
+  };
+
+  const onPause = () => {
+    dispatch({ type: 'UPDATE_currentSongStatus', value: 'pause' });
+  };
+
   const onTimeUpdate = () => {
     const { currentTime, duration } = audioRef.current;
     const progress = currentTime / duration;
@@ -43,14 +57,17 @@ const App = () => {
   return [<Routers key="router" />,
   <audio
     key="audio"
-    autoPlay
     className="audio"
     ref={audioRef}
+    src={(currentSong || {}).musicSrc}
+    onLoadedData={onLoadedData}
+    onPlay={onPlay}
+    onPause={onPause}
     onTimeUpdate={onTimeUpdate}
     onEnded={onEnded}
     onError={onError}
   >
-    <source src={(currentSong || {}).src} />
+    <source src={(currentSong || {}).musicSrc} />
     您的浏览器不支持 audio 元素。
   </audio>]
 };

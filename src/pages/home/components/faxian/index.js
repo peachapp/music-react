@@ -69,11 +69,15 @@ const Faxian = (props) => {
     window.location.href = url;
   };
 
-  const onFindBallClick = (url) => {
-    if (!url) {
-      return false;
-    };
-    window.location.href = url;
+  const onFindBallClick = (item) => {
+    switch (item.id) {
+      case -1:
+        history.push("/songrcmd");
+        break;
+      default:
+        history.push("/songrcmd");
+    }
+    // window.location.href = item.url;
   };
 
   const onPersonalizedClick = (id) => {

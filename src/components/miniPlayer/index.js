@@ -1,15 +1,51 @@
 import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import "./index.less";
 
 const MiniPlayer = (props) => {
-  const { imgUrl, musicName, playStatus, onPlayStatusChange, onPlayListView, className } = props || {};
+  const history = useHistory();
+  // props
+  const { className } = props || {};
 
-  return <div className={`mini-player-container ${className || ""}`}>
-    <img className="mini-player-img" src={imgUrl} alt="" />
-    <div className="mini-player-name">{musicName}</div>
+  // ref
+  const audioRef = useSelector(state => state.audioRef);
+
+  // data
+  const currentSongList = useSelector(state => state.currentSongList);
+  const currentSongIndex = useSelector(state => state.currentSongIndex);
+  const currentSongStatus = useSelector(state => state.currentSongStatus);
+  const currentSong = currentSongList[currentSongIndex];
+
+  const dispatch = useDispatch();
+
+  // methods
+  const onPlayStatusChange = (event) => {
+    event.stopPropagation();
+    event.cancelBubble = true;
+    if (currentSongStatus === 'play') {
+      audioRef.current.pause();
+    } else {
+      audioRef.current.play();
+    };
+  };
+
+  const onPlayListView = (event) => {
+    event.stopPropagation();
+    event.cancelBubble = true;
+    console.log('onPlayListView');
+  };
+
+  const onToPlayer = () => {
+    history.push("/player");
+  };
+
+  return <div className={`mini-player-container ${className || ""}`} onClick={onToPlayer}>
+    <img className="mini-player-img" src={currentSong.picUrl} alt="" />
+    <div className="mini-player-name">{currentSong.musicName}-{currentSong.ar}</div>
     <div className="mini-player-status" onClick={onPlayStatusChange}>
       <svg aria-hidden="true" className="mini-player-status-icon">
-        <use xlinkHref={`#${playStatus === "play" ? "iconzanting" : "iconbofang"}`} />
+        <use xlinkHref={`#${currentSongStatus === "play" ? "iconzanting" : "iconbofang"}`} />
       </svg>
     </div>
     <div className="mini-player-more" onClick={onPlayListView}>

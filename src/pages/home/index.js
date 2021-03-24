@@ -17,7 +17,7 @@ const Home = (props) => {
 
   // data
   const homeActiveSubroute = useSelector(state => state.homeActiveSubroute);
-  const currentSong = useSelector(state => state.currentSong);
+  const currentSongIndex = useSelector(state => state.currentSongIndex);
 
   const dispatch = useDispatch();
 
@@ -27,7 +27,7 @@ const Home = (props) => {
     history.push(`/home/${homeActiveSubroute}`);
   }, [history, homeActiveSubroute])
 
-  return <div className={`container home-container ${currentSong ? 'home-container-mini' : ''}`}>
+  return <div className={`container home-container ${currentSongIndex !== null ? 'home-container-mini' : ''}`}>
     <div className="home-content">
       <Switch>
         <Route path='/home/' exact component={Faxian}></Route>
@@ -38,7 +38,7 @@ const Home = (props) => {
         <Route path='/home/yuncun' component={Yuncun}></Route>
       </Switch>
     </div>
-    {currentSong ? <MiniPlayer className="home-miniplayer" /> : ""}
+    {currentSongIndex !== null ? <MiniPlayer className="home-miniplayer" /> : ""}
     <TabBar
       className="tabbar-container"
       activeKey={homeActiveSubroute}

@@ -1,29 +1,48 @@
 import React, { useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { Slider } from 'zarm';
 import "./index.less";
 
 const NormalPlayer = (props) => {
+  const history = useHistory();
   // props
 
-  // data
-  const currentSongProgress = useSelector(state => state.currentSongProgress);
+  // ref
   const audioRef = useSelector(state => state.audioRef);
 
+  // data
+  const currentSongList = useSelector(state => state.currentSongList);
+  const currentSongIndex = useSelector(state => state.currentSongIndex);
+  const currentSongStatus = useSelector(state => state.currentSongStatus);
+  const currentSongProgress = useSelector(state => state.currentSongProgress);
+  const currentSong = currentSongList[currentSongIndex];
+
   // methods
+  const onGoBack = () => {
+    history.goBack();
+  };
+
   const onProgressChange = (value) => {
     const { duration } = audioRef.current;
     audioRef.current.currentTime = value * duration / 100;
-  }
+  };
 
+  const onPlayStatusChange = (event) => {
+    if (currentSongStatus === 'play') {
+      audioRef.current.pause();
+    } else {
+      audioRef.current.play();
+    };
+  };
 
   return <div className="normal-player-container">
     <div className="normal-player-header">
-      <div className="normal-player-header-left">
+      <div className="normal-player-header-left" onClick={onGoBack}>
         <i className="iconfont iconxia" />
       </div>
       <div className="normal-player-header-center">
-        Dancing With Your Ghost
+        {currentSong.musicName}
       </div>
       <div className="normal-player-header-right">
         <i className="iconfont iconfenxiang1" />
@@ -57,12 +76,9 @@ const NormalPlayer = (props) => {
         <div className="normal-player-operation-item">
           <i className="iconfont iconshangyiqu normal-player-prev" />
         </div>
-        <div className="normal-player-operation-item">
-          <i className="iconfont iconbofang normal-player-play" />
+        <div className="normal-player-operation-item" onClick={onPlayStatusChange}>
+          <i className={`iconfont  ${currentSongStatus === 'play' ? 'iconzanting normal-player-pause' : 'iconbofang normal-player-play'}`} />
         </div>
-        {/* <div className="normal-player-operation-item">
-          <i className="iconfont iconzanting normal-player-pause" />
-        </div> */}
         <div className="normal-player-operation-item">
           <i className="iconfont iconxiayiqu normal-player-next" />
         </div>

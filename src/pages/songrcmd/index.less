@@ -1,0 +1,97 @@
+.songrcmd-container {
+  padding: 44px 0 0;
+  background-color: #fff;
+  overflow-y: auto;
+
+  &.songrcmd-container-mini {
+    padding-bottom: 48px; // 48
+  }
+
+  .songrcmd-header {
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+  }
+
+  .songrcmd-navbar {
+    background-color: @brand-primary;
+    color: #fff;
+  }
+
+  .songrcmd-control {
+    margin: 0 16px;
+    padding: 12px 0;
+    display: flex;
+    align-items: center;
+  }
+
+  .songrcmd-bofang-all {
+    margin-right: 12px;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    background-color: @brand-primary;
+  }
+
+  .songrcmd-bofang-all .iconbofang1 {
+    font-size: 12px;
+    color: #fff;
+  }
+
+  .songrcmd-control-text {
+    font-size: 16px;
+    color: #000;
+  }
+
+  .songrcmd-list {
+    margin: 0 16px;
+  }
+
+  .songrcmd-item {
+    padding: 12px 0;
+    display: flex;
+    align-items: center;
+  }
+
+  .songrcmd-img {
+    width: 50px;
+    height: 50px;
+    margin-right: 12px;
+    border-radius: 8px;
+  }
+
+  .songrcmd-content {
+    margin-right: 12px;
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .songrcmd-name {
+    margin-bottom: 6px;
+    font-size: 16px;
+  }
+
+  .songrcmd-other {
+    font-size: 12px;
+    color: #666;
+  }
+
+  .songrcmd-action .iconbofang {
+    font-size: 24px;
+    color: #666;
+  }
+
+  .songrcmd-miniplayer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    padding: 8px 16px;
+    border: 1px solid #eee;
+  }
+}

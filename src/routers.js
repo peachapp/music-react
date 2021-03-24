@@ -8,7 +8,9 @@ import { HashRouter, Switch, Route, Redirect } from 'react-router-dom';
 import Loading from 'components/loading/index';
 const Login = lazy(() => import('pages/login/index'));
 const Home = lazy(() => import('pages/home/index'));
+const Songrcmd = lazy(() => import('pages/songrcmd/index'));
 const Gedan = lazy(() => import('pages/gedan/index'));
+const Player = lazy(() => import('pages/player/index'));
 const Test = lazy(() => import('pages/test/index'));
 const NotFound = lazy(() => import('pages/notFound/index'));
 
@@ -18,7 +20,9 @@ const Routers = () => {
       <Switch>
         <Route path='/' exact component={Home}></Route>
         <Route path='/home' component={Home}></Route>
+        <Route path='/songrcmd' component={Songrcmd}></Route>
         <Route path='/gedan' component={Gedan}></Route>
+        <Route path='/player' component={Player}></Route>
         <Route path='/login' component={Login}></Route>
         <Route path='/test' component={Test}></Route>
         <Route path='/notFound' component={NotFound}></Route>

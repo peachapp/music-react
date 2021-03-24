@@ -19,11 +19,21 @@ export function audioRef(state = null, action) {
   }
 };
 
-// 当前正在播放的音乐
-export function currentSong(state = null, action) {
+// 当前正在播放列表
+export function currentSongList(state = [], action) {
   switch (action.type) {
-    case 'UPDATE_currentSong':
-      return Object.assign({}, action.state);
+    case 'UPDATE_currentSongList':
+      return Object.assign({}, action.value);
+    default:
+      return state;
+  }
+};
+
+// 当前正在播放的音乐索引
+export function currentSongIndex(state = null, action) {
+  switch (action.type) {
+    case 'UPDATE_currentSongIndex':
+      return action.value;
     default:
       return state;
   }
@@ -39,8 +49,8 @@ export function currentSongProgress(state = 0, action) {
   }
 };
 
-// 当前正在播放的音乐的播放状态 暂停/播放
-export function currentSongStatus(state = 0, action) {
+// 当前正在播放的音乐的播放状态 暂停/播放 pause/play
+export function currentSongStatus(state = 'pause', action) {
   switch (action.type) {
     case 'UPDATE_currentSongStatus':
       return action.value;
