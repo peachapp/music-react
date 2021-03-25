@@ -34,7 +34,7 @@ const App = () => {
 
   const onTimeUpdate = () => {
     const { currentTime, duration } = audioRef.current;
-    const progress = currentTime / duration;
+    const progress = (currentTime / duration || []);
     dispatch({ type: 'UPDATE_currentSongProgress', value: progress * 100 });
   };
 
