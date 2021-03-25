@@ -37,8 +37,8 @@ const Songrcmd = (props) => {
     history.goBack();
   };
 
-  const onPlay = (index) => {
-    const list = dailySongs.map(dailySongItem => {
+  const generatePlayList = () => {
+    return dailySongs.map(dailySongItem => {
       return {
         id: dailySongItem.id,
         musicSrc: `https://music.163.com/song/media/outer/url?id=${dailySongItem.id}.mp3`,
@@ -47,6 +47,16 @@ const Songrcmd = (props) => {
         ar: dailySongItem.ar.map(arItem => arItem.name).join('、')
       }
     });
+  };
+
+  const onPlayAll = () => {
+    const list = generatePlayList();
+    dispatch({ type: 'UPDATE_currentSongList', value: list });
+    dispatch({ type: 'UPDATE_currentSongIndex', value: 0 });
+  };
+
+  const onPlay = (index) => {
+    const list = generatePlayList();
     dispatch({ type: 'UPDATE_currentSongList', value: list });
     dispatch({ type: 'UPDATE_currentSongIndex', value: index });
   };
@@ -62,7 +72,7 @@ const Songrcmd = (props) => {
       />
     </div>
     <div className="songrcmd-control">
-      <div className="songrcmd-bofang-all">
+      <div className="songrcmd-bofang-all" onClick={onPlayAll}>
         <i className="iconfont iconbofang1" />
       </div>
       <div className="songrcmd-control-text">播放全部</div>

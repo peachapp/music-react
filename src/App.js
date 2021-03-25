@@ -39,12 +39,11 @@ const App = () => {
   };
 
   const onEnded = () => {
-    console.log('onEnded', audioRef)
-    // if (mode === playMode.loop) {
-    //   handleLoop();
-    // } else {
-    //   handleNext();
-    // }
+    let nextIndex = currentSongIndex + 1;
+    if (nextIndex > currentSongList.length - 1) {
+      nextIndex = 0;
+    };
+    dispatch({ type: 'UPDATE_currentSongIndex', value: nextIndex });
   };
 
   const onError = () => {

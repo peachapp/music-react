@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import "./index.less";
 
@@ -13,6 +13,8 @@ const NormalPlayer = (props) => {
   const sliderRef = useRef();
   const handleRef = useRef();
   const lineRef = useRef();
+
+  const dispatch = useDispatch();
 
   // data
   const currentSongList = useSelector(state => state.currentSongList);
@@ -41,14 +43,6 @@ const NormalPlayer = (props) => {
   const onProgressChange = (value) => {
     const { duration } = audioRef.current;
     audioRef.current.currentTime = value * duration;
-  };
-
-  const onPlayStatusChange = (event) => {
-    if (currentSongStatus === 'play') {
-      audioRef.current.pause();
-    } else {
-      audioRef.current.play();
-    };
   };
 
   const _offset = (offsetWidth) => {
@@ -90,6 +84,30 @@ const NormalPlayer = (props) => {
     endTouch.initiated = false;
     setTouch(endTouch);
     _changePercent();
+  };
+
+  const onPlayStatusChange = (event) => {
+    if (currentSongStatus === 'play') {
+      audioRef.current.pause();
+    } else {
+      audioRef.current.play();
+    };
+  };
+
+  const onPlayPrev = () => {
+    let prevIndex = currentSongIndex - 1;
+    if (prevIndex < 0) {
+      prevIndex = currentSongList.length - 1;
+    };
+    dispatch({ type: 'UPDATE_currentSongIndex', value: prevIndex });
+  };
+
+  const onPlayNext = () => {
+    let nextIndex = currentSongIndex + 1;
+    if (nextIndex > currentSongList.length - 1) {
+      nextIndex = 0;
+    };
+    dispatch({ type: 'UPDATE_currentSongIndex', value: nextIndex });
   };
 
   return <div className="normal-player-container">
@@ -136,13 +154,13 @@ const NormalPlayer = (props) => {
         <div className="normal-player-operation-item">
           <i className="iconfont iconsuijibofang normal-player-suiji" />
         </div>
-        <div className="normal-player-operation-item">
+        <div className="normal-player-operation-item" onClick={onPlayPrev}>
           <i className="iconfont iconshangyiqu normal-player-prev" />
         </div>
         <div className="normal-player-operation-item" onClick={onPlayStatusChange}>
           <i className={`iconfont  ${currentSongStatus === 'play' ? 'iconzanting normal-player-pause' : 'iconbofang normal-player-play'}`} />
         </div>
-        <div className="normal-player-operation-item">
+        <div className="normal-player-operation-item" onClick={onPlayNext}>
           <i className="iconfont iconxiayiqu normal-player-next" />
         </div>
         <div className="normal-player-operation-item">
