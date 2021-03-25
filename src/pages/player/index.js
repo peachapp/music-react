@@ -1,20 +1,23 @@
 import React, { useState, useRef } from 'react';
-import MiniPlayer from 'components/miniPlayer';
+import { useSelector } from 'react-redux';
 import NormalPlayer from 'components/normalPlayer';
 import "./index.less";
 
 const Player = (props) => {
   // props
-  const { src, imgUrl, musicName, playStatus, onPlayStatusChange, onPlayListView } = props || {};
 
   // data
+  const currentSongList = useSelector(state => state.currentSongList);
+  const currentSongIndex = useSelector(state => state.currentSongIndex);
+  const currentSong = currentSongList[currentSongIndex];
 
   // methods
 
 
   return <div className="player-container">
-    {/* <MiniPlayer {...props} /> */}
     <NormalPlayer {...props} />
+    <div className="player-bg" style={{ 'backgroundImage': `url(${currentSong.picUrl})` }}></div>
+    <div className="player-mask"></div>
   </div >
 };
 

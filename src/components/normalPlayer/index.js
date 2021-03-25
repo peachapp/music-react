@@ -122,6 +122,12 @@ const NormalPlayer = (props) => {
         <i className="iconfont iconfenxiang1" />
       </div>
     </div>
+    <div className="normal-player-phonograph">
+
+      <div className="normal-player-img-container">
+        <img className="normal-player-img" src={currentSong.picUrl} alt="" />
+      </div>
+    </div>
     <div className="normal-player-control">
       <div className="normal-player-menus">
         <div className="normal-player-menu-item">
