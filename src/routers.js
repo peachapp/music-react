@@ -6,6 +6,7 @@ import { HashRouter, Switch, Route, Redirect } from 'react-router-dom';
 //Route配置路由规则
 //Redirect跳转错误显示的页面
 import Loading from 'components/loading/index';
+import AnimationRoute from 'components/animationRoute/index';
 const Login = lazy(() => import('pages/login/index'));
 const Home = lazy(() => import('pages/home/index'));
 const Songrcmd = lazy(() => import('pages/songrcmd/index'));
@@ -17,17 +18,19 @@ const NotFound = lazy(() => import('pages/notFound/index'));
 const Routers = () => {
   return <HashRouter>
     <Suspense fallback={<Loading />}>
-      <Switch>
-        <Route path='/' exact component={Home}></Route>
-        <Route path='/home' component={Home}></Route>
-        <Route path='/songrcmd' component={Songrcmd}></Route>
-        <Route path='/gedan' component={Gedan}></Route>
-        <Route path='/player' component={Player}></Route>
-        <Route path='/login' component={Login}></Route>
-        <Route path='/test' component={Test}></Route>
-        <Route path='/notFound' component={NotFound}></Route>
-        <Redirect to='/notFound'></Redirect>
-      </Switch>
+      <AnimationRoute>
+        <Switch>
+          <Route path='/' exact component={Home}></Route>
+          <Route path='/home' component={Home}></Route>
+          <Route path='/songrcmd' component={Songrcmd}></Route>
+          <Route path='/gedan' component={Gedan}></Route>
+          <Route path='/player' component={Player}></Route>
+          <Route path='/login' component={Login}></Route>
+          <Route path='/test' component={Test}></Route>
+          <Route path='/notFound' component={NotFound}></Route>
+          <Redirect to='/notFound'></Redirect>
+        </Switch>
+      </AnimationRoute>
     </Suspense>
   </HashRouter>
 };
