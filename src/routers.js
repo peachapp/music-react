@@ -7,21 +7,21 @@ import { HashRouter, Switch, Route, Redirect, withRouter } from 'react-router-do
 //Redirect跳转错误显示的页面
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import Loading from 'components/loading/index';
-// const Login = lazy(() => import('pages/login/index'));
-// const Home = lazy(() => import('pages/home/index'));
-// const Songrcmd = lazy(() => import('pages/songrcmd/index'));
-// const Gedan = lazy(() => import('pages/gedan/index'));
-// const Player = lazy(() => import('pages/player/index'));
-// const Test = lazy(() => import('pages/test/index'));
-// const NotFound = lazy(() => import('pages/notFound/index'));
+const Login = lazy(() => import('pages/login/index'));
+const Home = lazy(() => import('pages/home/index'));
+const Songrcmd = lazy(() => import('pages/songrcmd/index'));
+const Gedan = lazy(() => import('pages/gedan/index'));
+const Player = lazy(() => import('pages/player/index'));
+const Test = lazy(() => import('pages/test/index'));
+const NotFound = lazy(() => import('pages/notFound/index'));
 
-import Login from 'pages/login/index';
-import Home from 'pages/home/index';
-import Songrcmd from 'pages/songrcmd/index';
-import Gedan from 'pages/gedan/index';
-import Player from 'pages/player/index';
-import Test from 'pages/test/index';
-import NotFound from 'pages/notFound/index';
+// import Login from 'pages/login/index';
+// import Home from 'pages/home/index';
+// import Songrcmd from 'pages/songrcmd/index';
+// import Gedan from 'pages/gedan/index';
+// import Player from 'pages/player/index';
+// import Test from 'pages/test/index';
+// import NotFound from 'pages/notFound/index';
 
 const AnimationRoute = withRouter(({ location }) => {
   return (
