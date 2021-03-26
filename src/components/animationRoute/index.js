@@ -16,7 +16,7 @@ const ANIMATION_MAP = {
   POP: "refade",
 };
 
-function AnimationRoute({ children, location, history }) {
+const AnimationRoute = ({ children, location, history }) => {
   // history.action 根据动作自行判断前进和后退
   return (
     <TransitionGroup
