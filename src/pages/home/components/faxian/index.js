@@ -2,9 +2,9 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { Carousel, Button, Icon } from 'zarm';
-import Container from 'components/container';
 import { getBanner, getFindBall, getPersonalized } from 'axios/api/home';
 import { bigNumberTransform } from 'common/utils';
+import Container from 'components/container';
 import './index.less';
 
 const Faxian = (props) => {

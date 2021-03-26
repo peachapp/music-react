@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { NavBar, Icon } from 'zarm';
 import { getDailySongs } from 'axios/api/songrcmd';
+import Container from 'components/container';
 import MiniPlayer from 'components/miniPlayer';
 import './index.less';
 
@@ -77,30 +78,32 @@ const Songrcmd = (props) => {
       </div>
       <div className="songrcmd-control-text">播放全部</div>
     </div>
-    <div className="songrcmd-list">
-      {
-        dailySongs.map((dailySongItem, dailySongIndex) => {
-          return <div className="songrcmd-item" key={dailySongItem.id}>
-            <img className="songrcmd-img" src={dailySongItem.al.picUrl} alt="" />
-            <div className="songrcmd-content">
-              <div className="songrcmd-name">{dailySongItem.name}</div>
-              <div className="songrcmd-other">
-                {
-                  dailySongItem.ar.map((arItem) => {
-                    return <span key={arItem.id}>{arItem.name}</span>
-                  })
-                }
-                <span> - </span>
-                <span>{dailySongItem.al.name}</span>
+    <Container>
+      <div className="songrcmd-list">
+        {
+          dailySongs.map((dailySongItem, dailySongIndex) => {
+            return <div className="songrcmd-item" key={dailySongItem.id}>
+              <img className="songrcmd-img" src={dailySongItem.al.picUrl} alt="" />
+              <div className="songrcmd-content">
+                <div className="songrcmd-name">{dailySongItem.name}</div>
+                <div className="songrcmd-other">
+                  {
+                    dailySongItem.ar.map((arItem) => {
+                      return <span key={arItem.id}>{arItem.name}</span>
+                    })
+                  }
+                  <span> - </span>
+                  <span>{dailySongItem.al.name}</span>
+                </div>
+              </div>
+              <div className="songrcmd-action" onClick={() => { onPlay(dailySongIndex) }}>
+                <i className="iconfont iconbofang" />
               </div>
             </div>
-            <div className="songrcmd-action" onClick={() => { onPlay(dailySongIndex) }}>
-              <i className="iconfont iconbofang" />
-            </div>
-          </div>
-        })
-      }
-    </div>
+          })
+        }
+      </div>
+    </Container>
     {currentSongIndex !== null ? <MiniPlayer className="songrcmd-miniplayer" /> : ""}
   </div>
 };
